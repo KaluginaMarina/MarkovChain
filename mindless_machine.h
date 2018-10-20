@@ -17,7 +17,7 @@
  * size_graph - количество вершин графа
  */
 typedef struct graph {
-    int size_graph;
+    size_t size_graph;
     char** v_graph;
     int** e_graph;
 } graph;
@@ -122,4 +122,10 @@ int graph_add_e_graph(char *str_prev, char *str_cur, graph* graph);
  * @return указатель на graph
  */
 graph* graph_create(size_t sz);
+
+/**
+ * Функция выводит граф в консоль
+ * @param graph
+ */
+void graph_print(graph* graph);
 #endif //MARKOV_CHAIN_FOR_STRING_H

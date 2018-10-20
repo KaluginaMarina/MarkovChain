@@ -5,12 +5,14 @@
 
 int main() {
 
-    char* str = (char*)malloc(50 * sizeof(char));
-    read_string(str);
+    graph* gr = graph_create(3);
+    gr->size_graph = 3;
+    gr->v_graph[0] = "i";
+    gr->v_graph[1] = "Markov's";
+    gr->v_graph[2] = "chain";
+    gr->e_graph[0][1] = 1;
+    gr->e_graph[1][2] = 1;
 
-    str = str_replace_punct(str);
-
-    printf("%s", str);
-
+    graph_print(gr);
     return(0);
 }

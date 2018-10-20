@@ -122,3 +122,38 @@ char* str_replace_punct(char* str){
     return res_str;
 }
 
+graph* graph_create(size_t sz){
+    size_t i, j;
+    graph* gr = (graph*)malloc(sizeof(gr));
+    gr->size_graph = 0;
+    gr->v_graph = (char**)malloc(sz * sizeof(char*));
+    for (i = 0; i < sz; ++i){
+        gr->v_graph[i] = (char*)malloc(sizeof(char) * 256);
+    }
+    gr->e_graph = (int**)malloc(sz * sizeof(int*));
+    for (i = 0; i < sz; ++i){
+        gr->e_graph[i] = (int*)malloc(sz * sizeof(int));
+        for(j = 0; j < sz; ++j){
+            gr->e_graph[i][j] = 0;
+        }
+    }
+    return gr;
+}
+
+void graph_print(graph* graph){
+    printf("\n======================================\n"
+           "Колиество вершин: %lu\n\n"
+           "Вершины графа: \n", graph->size_graph);
+    size_t i, j;
+    for (i = 0; i < graph->size_graph; ++i){
+        printf("#%lu -- %s\n", i, graph->v_graph[i]);
+    }
+    printf("\n");
+    for (i = 0; i < graph->size_graph; ++i){
+        for (j = 0; j < graph->size_graph; ++j){
+            printf("%d ", graph->e_graph[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n======================================\n");
+}
