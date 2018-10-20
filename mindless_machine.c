@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include "for_string.h"
+#include "mindless_machine.h"
 
 int read_string (char *str) {
     char s = ' ';
@@ -75,12 +75,19 @@ int write_file(char *fname, char *str){
 }
 
 int str_parse(char* str, char* v_graph, int** e_graph){
+
+    str_to_down(str);
+    str = str_replace_punct(str);
+
+    char* prev = ".";
+
     str = strtok (str, " ");
     while (str != NULL) {
         str = strtok (NULL, " ");
-
     }
 }
+
+
 
 //TODO поддержка русских символов
 bool str_to_down(char* str){
@@ -114,3 +121,4 @@ char* str_replace_punct(char* str){
     free(str);
     return res_str;
 }
+
