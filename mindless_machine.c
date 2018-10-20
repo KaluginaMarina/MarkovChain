@@ -155,5 +155,43 @@ void graph_print(graph* graph){
         }
         printf("\n");
     }
-    printf("\n======================================\n");
+    printf("\n======================================\n\n");
+}
+
+int graph_search_elem(char *str, graph const* graph){
+    if (str == NULL || graph == NULL){
+        return -2;
+    }
+    size_t i;
+    for (i = 0; i < graph->size_graph; ++i){
+        if (strcmp(graph->v_graph[i], str) == 0){
+            return (int)i;
+        }
+    }
+    return -1;
+}
+
+int graph_add_v_graph(char *str, graph* graph){
+    if (str == NULL || graph == NULL){
+        return -1;
+    }
+    int s = graph_search_elem(str, graph);
+    if (s != -1){
+        return s;
+    }
+    ++(graph->size_graph);
+    graph->v_graph[graph->size_graph - 1] = str;
+    return (int)graph->size_graph - 1;
+}
+
+int graph_add_e_graph(char *str_prev, char *str_cur, graph* graph){
+    if(str_cur == NULL || str_prev == NULL || graph == NULL){
+        return -1;
+    }
+    int i, j;
+    i = graph_add_v_graph(str_prev, graph);
+    j = graph_add_v_graph(str_cur, graph);
+
+    ++(graph->e_graph[i][j]);
+    return 0;
 }
