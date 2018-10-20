@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-#include <locale.h>
+#include <string.h>
 #include "for_string.h"
 
 int read_string (char *str) {
@@ -72,4 +72,45 @@ int write_file(char *fname, char *str){
         ++cur;
     }
     return(0);
+}
+
+int str_parse(char* str, char* v_graph, int** e_graph){
+    str = strtok (str, " ");
+    while (str != NULL) {
+        str = strtok (NULL, " ");
+
+    }
+}
+
+//TODO поддержка русских символов
+bool str_to_down(char* str){
+    if (str == NULL){
+        return false;
+    }
+    char* cur = str;
+    while (*cur != '\0'){
+        if (*cur >= (char)'A' && *cur <= (char)'Z'){
+            *cur = (*cur - (char)'A') + (char)'a';
+        }
+        ++cur;
+    }
+    return true;
+}
+
+char* str_replace_punct(char* str){
+    char* res_str = (char*)malloc(2 * strlen(str) * sizeof(char)); //результирующая строка может быть максимум в 2 раа больше
+    char* cur_str = str;
+    char* cur_res = res_str;
+
+    while(*cur_str != '\0'){
+        if (*cur_str == '.' || *cur_str == ',' || *cur_str == '?' || *cur_str == '!' || *cur_str == '-' || *cur_str == ':') {//TODO должно быть, можно сделать тут регулярку.Тут не все.
+            *cur_res = ' ';
+            ++cur_res;
+        }
+        *cur_res = *cur_str;
+        ++cur_str;
+        ++cur_res;
+    }
+    free(str);
+    return res_str;
 }

@@ -1,11 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "for_string.h"
 
 int main() {
-    char str[15];
-    read_file("test.txt", str);
-    write_console(str);
-    write_file("test1.txt", str);
+
+    char* str = (char*)malloc(50 * sizeof(char));
+    read_string(str);
+
+    str = str_replace_punct(str);
+
+    printf("%s", str);
+
     return(0);
 }
