@@ -74,7 +74,8 @@ int write_file(char *fname, char *str){
     return(0);
 }
 
-int str_parse(char* str, char* v_graph, int** e_graph){
+//TODO написать эту функцию после всех функций для работы с графом
+int str_parse(char* str, graph graph){
 
     str_to_down(str);
     str = str_replace_punct(str);
@@ -86,7 +87,6 @@ int str_parse(char* str, char* v_graph, int** e_graph){
         str = strtok (NULL, " ");
     }
 }
-
 
 
 //TODO поддержка русских символов
