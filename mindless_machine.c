@@ -195,3 +195,49 @@ int graph_add_e_graph(char *str_prev, char *str_cur, graph* graph){
     ++(graph->e_graph[i][j]);
     return 0;
 }
+
+bool save_graph(char* filename, graph* graph){
+    FILE* output_file = fopen(filename, "w+");
+    if (output_file == NULL){
+        return false;
+    }
+    size_t i, j;
+    fprintf(output_file, "%lu\n", graph->size_graph);
+    for (i = 0; i < graph->size_graph; ++i){
+        fprintf(output_file, "%s\n", graph->v_graph[i]);
+    }
+    for(i = 0; i < graph->size_graph; ++i){
+        for (j = 0; j < graph->size_graph; ++j){
+            fprintf(output_file, "%d ", graph->e_graph[i][j]);
+        }
+        fprintf(output_file, "\n");
+    }
+    fclose(output_file);
+    return true;
+}
+
+graph* load_graph(char* filename){
+    FILE* input_file = fopen(filename, "r");
+    if (input_file == NULL){
+        return NULL;
+    }
+    size_t sz, i, j;
+
+    fscanf(input_file, "%lu", &sz);
+    graph* graph = graph_create(sz);
+
+    graph->size_graph = sz;
+
+    for (i = 0; i < sz; ++i){
+        fscanf(input_file, "%s", graph->v_graph[i]);
+    }
+
+    for (i = 0; i < sz; ++i){
+        for (j = 0; j < sz; ++j){
+            fscanf(input_file, "%d", &graph->e_graph[i][j]);
+        }
+    }
+
+    fclose(input_file);
+    return graph;
+}

@@ -7,7 +7,7 @@
 
 #ifndef MARKOV_CHAIN_FOR_STRING_H
 #define MARKOV_CHAIN_FOR_STRING_H
-#define N 4000 // глобальный буфер для максимальной строки
+#define N 1000000 // глобальный буфер для максимальной строки
 
 
 /**
@@ -129,4 +129,26 @@ graph* graph_create(size_t sz);
  * @param graph
  */
 void graph_print(graph* graph);
+
+/**
+ * Функция сохраняет граф в файл
+ * Структура хранения графа:
+ * size_graph\n
+ * v_graph[0]\n
+ * ...
+ * v_graph[size_graph - 1]
+ * v_graph[0][0] v_graph[0][1] ... v_graph[0][size_graph - 1]
+ * ...
+ * v_graph[size_graph - 1][0] v_graph[size_graph - 1][1] ... v_graph[size_graph - 1][size_graph - 1]
+ * @param filename - имя файла для хранения графа
+ * @param graph - указатель на граф
+ */
+bool save_graph(char* filename, graph* graph);
+
+/**
+ * Функция выгружает граф
+ * @param filename_v_graph - имя файла для хранения графа
+ * @return - указатель на созданный граф
+ */
+graph* load_graph(char* filename);
 #endif //MARKOV_CHAIN_FOR_STRING_H

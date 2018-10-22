@@ -31,6 +31,12 @@ int main() {
 
     printf("\nДобавили отношение %s --> %s", gr->v_graph[3], gr->v_graph[0]);
 
-    graph_print(gr);    
+    graph_print(gr);
+
+    printf("Загрузили граф в graph.txt и снова его считали:");
+    save_graph("graph.txt", gr);
+    gr = load_graph("graph.txt");
+    graph_print(gr);
+
     return(0);
 }
