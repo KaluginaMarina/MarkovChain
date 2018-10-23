@@ -38,5 +38,10 @@ int main() {
     gr = load_graph("graph.txt");
     graph_print(gr);
 
+    graph* graph1 = graph_create(100);
+    char* str_ = (char*)malloc(100 * sizeof(char));
+    read_string(str_);
+    create_machine(str_, graph1);
+    graph_print(graph1);
     return(0);
 }

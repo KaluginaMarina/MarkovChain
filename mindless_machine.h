@@ -61,13 +61,13 @@ int read_file(char *fname, char *str);
 int write_file(char *fname, char *str);
 
 /**
- * функция парсит строку по токенам
- * возвращает граф, со строками-веринами и массив, в котором храняться отношения между вершинами
+ * функция парсит строку по токенам и создает конечный автомат
  * @param str - исходная строка
  * @param graph - указатель на граф состояний
  * @return количество считанных символов
+ *          -1 - ошибка: передан NULL
  */
-int str_parse(char* str, graph graph);
+int create_machine(char *str, graph *graph);
 
 /**
  *  функция переводит слово в нижний регистр (english)

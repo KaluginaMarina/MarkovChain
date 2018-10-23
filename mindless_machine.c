@@ -75,17 +75,20 @@ int write_file(char *fname, char *str){
 }
 
 //TODO написать эту функцию после всех функций для работы с графом
-int str_parse(char* str, graph graph){
-
+int create_machine(char *str, graph *graph){
+    if (str == NULL || graph == NULL){
+        return -1;
+    }
     str_to_down(str);
     str = str_replace_punct(str);
-
-    char* prev = ".";
-
+    char* str_prev = ".";
     str = strtok (str, " ");
     while (str != NULL) {
         str = strtok (NULL, " ");
+        graph_add_e_graph(str_prev, str, graph);
+        str_prev = str;
     }
+    return 0;
 }
 
 
@@ -108,7 +111,6 @@ char* str_replace_punct(char* str){
     char* res_str = (char*)malloc(2 * strlen(str) * sizeof(char)); //результирующая строка может быть максимум в 2 раа больше
     char* cur_str = str;
     char* cur_res = res_str;
-
     while(*cur_str != '\0'){
         if (*cur_str == '.' || *cur_str == ',' || *cur_str == '?' || *cur_str == '!' || *cur_str == '-' || *cur_str == ':') {//TODO должно быть, можно сделать тут регулярку.Тут не все.
             *cur_res = ' ';
@@ -118,6 +120,7 @@ char* str_replace_punct(char* str){
         ++cur_str;
         ++cur_res;
     }
+    *cur_res = '\0';
     free(str);
     return res_str;
 }
@@ -222,7 +225,7 @@ graph* load_graph(char* filename){
         return NULL;
     }
     size_t sz, i, j;
-
+    //TODO обработать файлы с неправильной структурой
     fscanf(input_file, "%lu", &sz);
     graph* graph = graph_create(sz);
 
