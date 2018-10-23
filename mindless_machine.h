@@ -19,7 +19,7 @@
 typedef struct graph {
     size_t size_graph;
     char** v_graph;
-    int** e_graph;
+    double** e_graph;
 } graph;
 
 /**
@@ -151,4 +151,11 @@ bool save_graph(char* filename, graph* graph);
  * @return - указатель на созданный граф
  */
 graph* load_graph(char* filename);
+
+/**
+ * Функция создания графа вероятностей
+ * @param graph - указатель на граф
+ * @return
+ */
+bool graph_to_probability(graph *graph);
 #endif //MARKOV_CHAIN_FOR_STRING_H

@@ -36,6 +36,7 @@ int main() {
     printf("Загрузили граф в graph.txt и снова его считали:");
     save_graph("graph.txt", gr);
     gr = load_graph("graph.txt");
+    graph_to_probability(gr);
     graph_print(gr);
 
     graph* graph1 = graph_create(100);

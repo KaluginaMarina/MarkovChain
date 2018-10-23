@@ -74,7 +74,6 @@ int write_file(char *fname, char *str){
     return(0);
 }
 
-//TODO написать эту функцию после всех функций для работы с графом
 int create_machine(char *str, graph *graph){
     if (str == NULL || graph == NULL){
         return -1;
@@ -88,8 +87,11 @@ int create_machine(char *str, graph *graph){
         graph_add_e_graph(str_prev, str, graph);
         str_prev = str;
     }
+    graph_to_probability(graph);
     return 0;
 }
+
+
 
 
 //TODO поддержка русских символов
@@ -133,9 +135,9 @@ graph* graph_create(size_t sz){
     for (i = 0; i < sz; ++i){
         gr->v_graph[i] = (char*)malloc(sizeof(char) * 256);
     }
-    gr->e_graph = (int**)malloc(sz * sizeof(int*));
+    gr->e_graph = (double**)malloc(sz * sizeof(double *));
     for (i = 0; i < sz; ++i){
-        gr->e_graph[i] = (int*)malloc(sz * sizeof(int));
+        gr->e_graph[i] = (double*)malloc(sz * sizeof(double));
         for(j = 0; j < sz; ++j){
             gr->e_graph[i][j] = 0;
         }
@@ -154,7 +156,7 @@ void graph_print(graph* graph){
     printf("\n");
     for (i = 0; i < graph->size_graph; ++i){
         for (j = 0; j < graph->size_graph; ++j){
-            printf("%d ", graph->e_graph[i][j]);
+            printf("%f ", graph->e_graph[i][j]);
         }
         printf("\n");
     }
@@ -211,7 +213,7 @@ bool save_graph(char* filename, graph* graph){
     }
     for(i = 0; i < graph->size_graph; ++i){
         for (j = 0; j < graph->size_graph; ++j){
-            fprintf(output_file, "%d ", graph->e_graph[i][j]);
+            fprintf(output_file, "%lf ", graph->e_graph[i][j]);
         }
         fprintf(output_file, "\n");
     }
@@ -237,10 +239,28 @@ graph* load_graph(char* filename){
 
     for (i = 0; i < sz; ++i){
         for (j = 0; j < sz; ++j){
-            fscanf(input_file, "%d", &graph->e_graph[i][j]);
+            fscanf(input_file, "%lf", &graph->e_graph[i][j]);
         }
     }
 
     fclose(input_file);
     return graph;
+}
+
+bool graph_to_probability(graph *graph){
+    if (graph == NULL){
+        return true;
+    }
+    size_t i, j;
+    for (i = 0; i < graph->size_graph; ++i){
+        double sum = 0;
+        for(j = 0; j < graph->size_graph; ++j){
+            sum += graph->e_graph[i][j];
+        }
+        if (sum == 0) continue;
+        for(j = 0; j < graph->size_graph; ++j){
+            graph->e_graph[i][j] = graph->e_graph[i][j] / sum + ((j == 0)? 0 : graph->e_graph[i][j - 1]);
+        }
+    }
+    return true;
 }
