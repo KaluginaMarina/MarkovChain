@@ -12,6 +12,13 @@
 graph* create_new_machine(char* filename);
 
 /**
+ * Функция создания автомата из сохраненного графа
+ * @param filename - имя файла
+ * @return указатель на граф
+ */
+graph* create_new_machine_graph_file(char* filename);
+
+/**
  * Функция генерации предложения
  * @param graph - указатель на граф состояний (автомат)
  * @return - указатель на строку

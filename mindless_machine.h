@@ -7,8 +7,6 @@
 
 #ifndef MARKOV_CHAIN_FOR_STRING_H
 #define MARKOV_CHAIN_FOR_STRING_H
-#define N 1000000 // глобальный буфер для максимальной строки
-
 
 /**
  * Структура для хранения графа состояний конечного автомата.

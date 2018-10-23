@@ -15,11 +15,7 @@ int read_string (char *str) {
         scanf("%c", &s);
         *(str + n) = s;
         ++n;
-        if (n > N) {
-            return -1;
-        }
     }
-
     --n;
     *(str + n) = '\0';
     return n;
@@ -49,9 +45,6 @@ int read_file(char *fname, char *str){
 
     while(!feof(f)) {
         c = fgetc(f);
-        if (n >= N){
-            return -1;
-        }
         *(str + n) = (char)c;
         ++n;
     }
@@ -90,9 +83,6 @@ int create_machine(char *str, graph *graph){
     graph_to_probability(graph);
     return 0;
 }
-
-
-
 
 //TODO поддержка русских символов
 bool str_to_down(char* str){
@@ -227,8 +217,9 @@ graph* load_graph(char* filename){
         return NULL;
     }
     size_t sz, i, j;
-    //TODO обработать файлы с неправильной структурой
-    fscanf(input_file, "%lu", &sz);
+    if (fscanf(input_file, "%lu", &sz) != 1){
+        return NULL;
+    }
     graph* graph = graph_create(sz);
 
     graph->size_graph = sz;
@@ -239,7 +230,9 @@ graph* load_graph(char* filename){
 
     for (i = 0; i < sz; ++i){
         for (j = 0; j < sz; ++j){
-            fscanf(input_file, "%lf", &graph->e_graph[i][j]);
+            if (fscanf(input_file, "%lf", &graph->e_graph[i][j]) != 1){
+                return NULL;
+            }
         }
     }
 
@@ -249,7 +242,7 @@ graph* load_graph(char* filename){
 
 bool graph_to_probability(graph *graph){
     if (graph == NULL){
-        return true;
+        return false;
     }
     size_t i, j;
     for (i = 0; i < graph->size_graph; ++i){
