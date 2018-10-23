@@ -36,24 +36,6 @@ int write_console(char *str) {
     return 0;
 }
 
-int read_file(char *fname, char *str){
-    int n = 0, c;
-    FILE *f = fopen(fname, "r");
-    if (f == NULL){
-        return -2;
-    }
-
-    while(!feof(f)) {
-        c = fgetc(f);
-        *(str + n) = (char)c;
-        ++n;
-    }
-    --n;
-    *(str + n) = '\0';
-    fclose(f);
-    return n;
-}
-
 int write_file(char *fname, char *str){
     char *cur = str;
     FILE *f = fopen(fname, "w+");
@@ -74,12 +56,13 @@ int create_machine(char *str, graph *graph){
     str_to_down(str);
     str = str_replace_punct(str);
     char* str_prev = ".";
-    str = strtok (str, " ");
+    str = strtok (str, " \n");
     while (str != NULL) {
         str = strtok (NULL, " ");
         graph_add_e_graph(str_prev, str, graph);
         str_prev = str;
     }
+    graph->e_graph[0][0] = 0;
     graph_to_probability(graph);
     return 0;
 }

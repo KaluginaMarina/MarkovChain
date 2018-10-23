@@ -3,7 +3,6 @@
 
 #include "mindless_machine.h"
 //TODO обнулить из '.' в '.'
-//TODO функция для перевода в вероятности
 /**
  * Функция создания нового конечного автомата из файла filename
  * @param filename - имя файла
@@ -24,5 +23,12 @@ graph* create_new_machine_graph_file(char* filename);
  * @return - указатель на строку
  */
 char* generate(graph* graph);
+
+/**
+ * функция считывает строку с файла
+ * @param fname - имя файла, с которого производится считывание
+ * @return  указатель на начало строки, в которую производится запись с файла
+ */
+char* read_file(char *fname);
 
 #endif //MARKOV_CHAIN_CHAIN_H
