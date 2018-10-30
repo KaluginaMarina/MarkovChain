@@ -39,12 +39,14 @@ int main() {
 //    gr = load_graph("graph.txt");
 //    graph_print(gr);
 
-    graph* grgr = create_new_machine("lev_tolstoy_100.txt");
+    graph* grgr = create_new_machine("Bredberi.txt");
 //    if (grgr == NULL) {
 //        printf("NULL");
 //    } else graph_print(grgr);
 
     printf("%s\n", generate(grgr));
+
+    save_graph("Bredberi", grgr);
 
 //    graph* graph1 = graph_create(100);
 //    char* str_ = (char*)malloc(100 * sizeof(char));
