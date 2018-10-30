@@ -21,9 +21,9 @@ graph* create_new_machine(char* filename){
     return graph;
 }
 
-//есди rand = 0
 char* generate(graph* graph){
     char* str = (char*)malloc(9999 * sizeof(char));
+    *str = '\0';
     srand (time( NULL));
     int ind = 0;
     while(1){

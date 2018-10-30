@@ -21,7 +21,6 @@ int read_string (char *str) {
     return n;
 }
 
-
 int write_console(char *str) {
 
     char *cur = str;
@@ -49,8 +48,6 @@ int write_file(char *fname, char *str){
     return(0);
 }
 
-//TODO ПОЧЕМУ ТАК МНОГО ТОЧЕК В РЕЗУЛЬТАТЕ?
-//TODO что за буквы в начале?
 int create_machine(char *str, graph *graph){
     if (str == NULL || graph == NULL){
         return -1;
@@ -95,6 +92,8 @@ char* str_replace_punct(char* str){
         }
         if (*cur_str == '"'){
             ++cur_str;
+            *cur_res = ' ';
+            ++cur_res;
         }
         *cur_res = *cur_str;
         ++cur_str;

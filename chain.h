@@ -2,7 +2,6 @@
 #define MARKOV_CHAIN_CHAIN_H
 
 #include "mindless_machine.h"
-//TODO обнулить из '.' в '.'
 /**
  * Функция создания нового конечного автомата из файла filename
  * @param filename - имя файла
