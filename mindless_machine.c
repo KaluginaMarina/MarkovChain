@@ -86,11 +86,11 @@ char* str_replace_punct(char* str){
     char* cur_str = str;
     char* cur_res = res_str;
     while(*cur_str != '\0'){
-        if (*cur_str == '.' || *cur_str == ',' || *cur_str == '?' || *cur_str == '!' || *cur_str == '-' || *cur_str == ':' || *cur_str == ';'  || *cur_str == '\n') {//TODO должно быть, можно сделать тут регулярку.Тут не все.
+        if (*cur_str == '.' || *cur_str == ',' || *cur_str == '?' || *cur_str == '!' || *cur_str == '-' || *cur_str == ':' || *cur_str == ';') {//TODO должно быть, можно сделать тут регулярку.Тут не все.
             *cur_res = ' ';
             ++cur_res;
         }
-        if (*cur_str == '"'){
+        if (*cur_str == '"' || *cur_str == '\n'){
             ++cur_str;
             *cur_res = ' ';
             ++cur_res;

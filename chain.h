@@ -30,4 +30,10 @@ char* generate(graph* graph);
  */
 char* read_file(char *fname);
 
+/**
+ * Функция приводит строку к читаемому виду (без лишних пробелов между знаками препинания)
+ * @param str - указатель на начало строки
+ * @return - новую строку-результат
+ */
+char* do_res_string(char* str);
 #endif //MARKOV_CHAIN_CHAIN_H

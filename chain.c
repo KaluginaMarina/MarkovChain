@@ -30,6 +30,7 @@ char* generate(graph* graph){
         double rand_v = (double)rand()/RAND_MAX;
         if (graph->e_graph[ind][0] >= rand_v){
             str = strcat(str, graph->v_graph[0]);
+            str = do_res_string(str);
             return str;
         }
         int i;
@@ -68,4 +69,29 @@ char* read_file(char *fname){
     *(str + n) = '\0';
     fclose(f);
     return str;
+}
+
+char* do_res_string(char* str){
+    char* result = (char*)malloc(9999 * sizeof(char));
+    char* str_cur = str;
+    char* res_cur = result;
+    while (*str_cur != '\0'){
+        if  (*str_cur == ' ' &&
+            (*(str_cur + 1) == '.' || *(str_cur + 1) == ',' || *(str_cur + 1) == '?' || *(str_cur + 1) == '!' ||
+             *(str_cur + 1) == '-' || *(str_cur + 1) == ':' || *(str_cur + 1) == ';')){
+            if (*(str_cur + 2) >= (char)'a' && *(str_cur + 2) <= (char)'z'){
+                *(str_cur + 2) = (*(str_cur + 2) - (char)'a') + (char)'A';
+            }
+            ++str_cur;
+            continue;
+        }
+        *res_cur = *str_cur;
+        ++str_cur;
+        ++res_cur;
+    }
+    if (*result >= (char)'a' && *result <= (char)'z'){
+        *result = (*result - (char)'a') + (char)'A';
+    }
+    *res_cur = '\0';
+    return result;
 }
