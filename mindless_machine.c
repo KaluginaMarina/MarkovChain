@@ -199,10 +199,12 @@ bool save_graph(char* filename, graph* graph){
 }
 
 graph* load_graph(char* filename){
+
     FILE* input_file = fopen(filename, "r");
     if (input_file == NULL){
         return NULL;
     }
+
     size_t sz, i, j;
     if (fscanf(input_file, "%lu", &sz) != 1){
         return NULL;
@@ -210,16 +212,13 @@ graph* load_graph(char* filename){
     graph* graph = graph_create(sz);
 
     graph->size_graph = sz;
-
     for (i = 0; i < sz; ++i){
         fscanf(input_file, "%s", graph->v_graph[i]);
     }
 
     for (i = 0; i < sz; ++i){
         for (j = 0; j < sz; ++j){
-            if (fscanf(input_file, "%lf", &graph->e_graph[i][j]) != 1){
-                return NULL;
-            }
+            fscanf(input_file, "%lf", &graph->e_graph[i][j]);
         }
     }
 

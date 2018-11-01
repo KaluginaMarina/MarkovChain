@@ -22,7 +22,8 @@ graph* create_new_machine(char* filename){
 }
 
 char* generate(graph* graph){
-    char* str = (char*)malloc(9999 * sizeof(char));
+    size_t buf = graph->size_graph * 250;
+    char* str = (char*)malloc(buf * sizeof(char));
     *str = '\0';
     srand (time( NULL));
     int ind = 0;
@@ -39,6 +40,10 @@ char* generate(graph* graph){
                 str = strcat(str, graph->v_graph[i]);
                 str = strcat(str, " ");
                 ind = i;
+                if (strlen(str) >= buf - 250){
+                    free(str);
+                    return NULL;
+                }
                 continue;
             }
         }

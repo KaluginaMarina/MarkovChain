@@ -5,8 +5,14 @@
 #include "chain.h"
 
 int main() {
-    graph* grgr = create_new_machine("Bredberi.txt");
-    printf("%s\n", generate(grgr));
-    save_graph("Bredberi", grgr);
+    graph* graph = create_new_machine_graph_file("tolstoy");
+    //printf("%s\n", generate(graph));
+    char* str = generate(graph);
+    int i = 0;
+    while (str == NULL){
+        printf("%d\n", ++i);
+        str = generate(graph);
+    }
+    printf("%s\n", str);
     return(0);
 }
