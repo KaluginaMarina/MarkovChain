@@ -57,9 +57,9 @@ int create_machine(char *str, graph *graph){
     char* str_prev = ".";
     str = strtok (str, " \n");
     while (str != NULL) {
-        str = strtok (NULL, " ");
         graph_add_e_graph(str_prev, str, graph);
         str_prev = str;
+        str = strtok (NULL, " ");
     }
     graph->e_graph[0][0] = 0;
     graph_to_probability(graph);
@@ -86,7 +86,7 @@ char* str_replace_punct(char* str){
     char* cur_str = str;
     char* cur_res = res_str;
     while(*cur_str != '\0'){
-        if (*cur_str == '.' || *cur_str == ',' || *cur_str == '?' || *cur_str == '!' || *cur_str == '-' || *cur_str == ':' || *cur_str == ';') {//TODO должно быть, можно сделать тут регулярку.Тут не все.
+        if ( *cur_str == '.' || *cur_str == ',' || *cur_str == '?' || *cur_str == '!' || *cur_str == '-' || *cur_str == ':' || *cur_str == ';') {//TODO должно быть, можно сделать тут регулярку.Тут не все.
             *cur_res = ' ';
             ++cur_res;
         }
