@@ -44,7 +44,7 @@ char* generate(graph* graph){
                     free(str);
                     return NULL;
                 }
-                continue;
+                break;
             }
         }
     }
@@ -63,7 +63,7 @@ char* read_file(char *fname){
     long sz = ftell(f);
     rewind(f);
 
-    char* str = (char*)malloc(sz * sizeof(char));
+    char* str = (char*)malloc(sz * sizeof(char) + 1);
 
     while(!feof(f)) {
         c = fgetc(f);

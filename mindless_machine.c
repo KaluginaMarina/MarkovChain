@@ -111,7 +111,7 @@ graph* graph_create(size_t sz){
     gr->v_graph = (char**)malloc(sz * sizeof(char*));
     for (i = 0; i < sz; ++i){
         gr->v_graph[i] = (char*)malloc(sizeof(char) * 256);
-    }
+    } //TODO пользуйся calloc
     gr->e_graph = (double**)malloc(sz * sizeof(double *));
     for (i = 0; i < sz; ++i){
         gr->e_graph[i] = (double*)malloc(sz * sizeof(double));
@@ -231,12 +231,18 @@ bool graph_to_probability(graph *graph){
         return false;
     }
     size_t i, j;
+    for (i = 0; i < graph->size_graph; ++i) {
+        graph->e_graph[i][i] = 0;
+    }
     for (i = 0; i < graph->size_graph; ++i){
         double sum = 0;
         for(j = 0; j < graph->size_graph; ++j){
             sum += graph->e_graph[i][j];
         }
-        if (sum == 0) continue;
+        if (sum == 0){
+            graph->e_graph[i][0] = 1;
+            sum = 1;
+        }
         for(j = 0; j < graph->size_graph; ++j){
             graph->e_graph[i][j] = graph->e_graph[i][j] / sum + ((j == 0)? 0 : graph->e_graph[i][j - 1]);
         }
