@@ -86,18 +86,26 @@ char* str_replace_punct(char* str){
     char* cur_str = str;
     char* cur_res = res_str;
     while(*cur_str != '\0'){
-        if ( *cur_str == '.' || *cur_str == ',' || *cur_str == '?' || *cur_str == '!' || *cur_str == '-' || *cur_str == ':' || *cur_str == ';') {//TODO должно быть, можно сделать тут регулярку.Тут не все.
-            *cur_res = ' ';
-            ++cur_res;
-        }
-        if (*cur_str == '"' || *cur_str == '\n'){
+        if (*cur_str == '"' || *cur_str == '\n' || *cur_res == '\t'){
             ++cur_str;
             *cur_res = ' ';
             ++cur_res;
+            continue;
         }
+
+        if ( *cur_str != ' ' && *cur_str != '\0' && *cur_str != '\'' && !(*cur_str >= 'a' && *cur_str <= 'z') &&
+            !(*cur_str >= 'A' && *cur_str <= 'Z') && !(*cur_str >= '0' && *cur_str <= '9')) {
+            *cur_res = ' ';
+            ++cur_res;
+        }
+
         *cur_res = *cur_str;
-        ++cur_str;
         ++cur_res;
+        if (*cur_str == '-'){
+            *cur_res = ' ';
+            ++cur_res;
+        }
+        ++cur_str;
     }
     *cur_res = '\0';
     free(str);
@@ -124,18 +132,16 @@ graph* graph_create(size_t sz){
 
 void graph_print(graph* graph){
     printf("\n======================================\n"
-           "Колиество вершин: %lu\n\n"
-           "Вершины графа: \n", graph->size_graph);
-    size_t i, j;
-    for (i = 0; i < graph->size_graph; ++i){
-        printf("#%lu -- %s\n", i, graph->v_graph[i]);
-    }
-    printf("\n");
-    for (i = 0; i < graph->size_graph; ++i){
-        for (j = 0; j < graph->size_graph; ++j){
-            printf("%f ", graph->e_graph[i][j]);
+           "Колиество вершин: %lu\n\n", graph->size_graph);
+    for (size_t i = 0; i < graph->size_graph; ++i) {
+        printf("%s ->", graph->v_graph[i]);
+        if (graph->e_graph[i][0] > 0) printf(" \"%s\" ", graph->v_graph[0]);
+        for(size_t j = 0; j < graph->size_graph; ++j){
+            if (graph->e_graph[i][j] - graph->e_graph[i][j - 1] > 0){
+                printf(" \"%s\" ", graph->v_graph[j]);
+            }
+            printf("\n");
         }
-        printf("\n");
     }
     printf("\n======================================\n\n");
 }
