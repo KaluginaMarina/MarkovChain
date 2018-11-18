@@ -25,7 +25,6 @@ char* generate(graph* graph){
     size_t buf = graph->size_graph * 250;
     char* str = (char*)malloc(buf * sizeof(char));
     *str = '\0';
-    srand (time( NULL));
     int ind = 0;
     while(1){
         double rand_v = (double)rand()/RAND_MAX;
@@ -61,6 +60,10 @@ char* read_file(char *fname){
 
     fseek(f, 0, SEEK_END);
     long sz = ftell(f);
+
+    if (sz >= 25000){
+        fprintf(stderr, "Внимание: файл содержит %ld символов.\n", sz);
+    }
     rewind(f);
 
     char* str = (char*)malloc(sz * sizeof(char) + 1);

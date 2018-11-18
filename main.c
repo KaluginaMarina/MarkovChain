@@ -1,18 +1,75 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <getopt.h>
+#include <time.h>
 #include "mindless_machine.h"
 #include "chain.h"
 
-int main() {
-    graph* graph = create_new_machine_graph_file("tolstoy");
-    //printf("%s\n", generate(graph));
-    char* str = generate(graph);
-    int i = 0;
-    while (str == NULL){
-        printf("%d\n", ++i);
-        str = generate(graph);
+#define FLAG_LOAD_FILE 1
+#define FLAG_SAVE_GRAPH 2
+#define FLAG_AMOUNT 4
+
+int main(int argc, char *argv[]) {
+    int flags = 0, opt = 0;
+    int n = 1;
+    srand (time( NULL));
+    while ((opt = getopt(argc, argv, "sln")) != -1) {
+        switch (opt) {
+            case 's':
+                flags |= FLAG_SAVE_GRAPH;
+                break;
+            case 'l':
+                flags |= FLAG_LOAD_FILE;
+                break;
+            case 'n':
+                flags |= FLAG_AMOUNT;
+                n = atoi(argv[optind]);
+                printf("Количество предложений: %d\n\n", n);
+                ++optind;
+                break;
+            default:
+                fprintf(stderr, "Используйте: %s [-l] [-s] [-n NUM] FILE\n", argv[0]);
+                exit(EXIT_FAILURE);
+        }
     }
-    printf("%s\n", str);
-    return(0);
+
+    if(argv[optind] == NULL){
+        fprintf(stderr, "Не введено имя файла.\n");
+        exit(EXIT_FAILURE);
+    }
+    char* filename = argv[optind];
+
+    graph* graph;
+    if (flags & FLAG_LOAD_FILE != 0){
+        filename[strlen(filename) - 4] = '\0';
+        graph = create_new_machine_graph_file(filename);
+        if (graph == NULL){
+            fprintf(stderr, "Неверное имя файла или граф не был сохранен.\n");
+            exit(EXIT_FAILURE);
+        }
+    } else {
+        graph = create_new_machine(filename);
+        if (graph == NULL){
+            fprintf(stderr, "Неверное имя файла.\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+
+    char* str;
+    for (int i = 0; i < n; ++i){
+        str = generate(graph);
+        while (str == NULL){
+            str = generate(graph);
+        }
+        printf("%s\n", str);
+    }
+
+    if ((flags & FLAG_SAVE_GRAPH) != 0) {
+        if ((flags & FLAG_LOAD_FILE) == 0)
+            filename[strlen(filename) - 4] = '\0';
+            save_graph(filename, graph);
+    }
+    exit(EXIT_SUCCESS);
 }
