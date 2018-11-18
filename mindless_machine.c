@@ -66,7 +66,6 @@ int create_machine(char *str, graph *graph){
     return 0;
 }
 
-//TODO поддержка русских символов
 bool str_to_down(char* str){
     if (str == NULL){
         return false;
@@ -119,7 +118,7 @@ graph* graph_create(size_t sz){
     gr->v_graph = (char**)malloc(sz * sizeof(char*));
     for (i = 0; i < sz; ++i){
         gr->v_graph[i] = (char*)malloc(sizeof(char) * 256);
-    } //TODO пользуйся calloc
+    }
     gr->e_graph = (double**)malloc(sz * sizeof(double *));
     for (i = 0; i < sz; ++i){
         gr->e_graph[i] = (double*)malloc(sz * sizeof(double));
@@ -224,7 +223,9 @@ graph* load_graph(char* filename){
 
     for (i = 0; i < sz; ++i){
         for (j = 0; j < sz; ++j){
-            fscanf(input_file, "%lf", &graph->e_graph[i][j]);
+            if (fscanf(input_file, "%lf", &graph->e_graph[i][j]) == EOF) {
+                return NULL;
+            }
         }
     }
 

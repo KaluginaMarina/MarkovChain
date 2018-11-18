@@ -3,6 +3,8 @@
 #include <string.h>
 #include <getopt.h>
 #include <time.h>
+#include <errno.h>
+#include <limits.h>
 #include "mindless_machine.h"
 #include "chain.h"
 
@@ -13,7 +15,7 @@
 int main(int argc, char *argv[]) {
     int flags = 0, opt = 0;
     int n = 1;
-    srand (time( NULL));
+    srand ((unsigned)time( NULL));
     while ((opt = getopt(argc, argv, "sln")) != -1) {
         switch (opt) {
             case 's':
@@ -24,7 +26,12 @@ int main(int argc, char *argv[]) {
                 break;
             case 'n':
                 flags |= FLAG_AMOUNT;
-                n = atoi(argv[optind]);
+                char *p;
+                n = (int)strtol(argv[optind], &p, 10);
+                if (errno != 0 || *p != '\0' || n > INT_MAX) {
+                    fprintf(stderr, "Неверное значение n.\n");
+                    exit(EXIT_FAILURE);
+                }
                 printf("Количество предложений: %d\n\n", n);
                 ++optind;
                 break;
@@ -41,7 +48,7 @@ int main(int argc, char *argv[]) {
     char* filename = argv[optind];
 
     graph* graph;
-    if (flags & FLAG_LOAD_FILE != 0){
+    if ((flags & FLAG_LOAD_FILE) != 0){
         filename[strlen(filename) - 4] = '\0';
         graph = create_new_machine_graph_file(filename);
         if (graph == NULL){
@@ -67,9 +74,10 @@ int main(int argc, char *argv[]) {
     }
 
     if ((flags & FLAG_SAVE_GRAPH) != 0) {
-        if ((flags & FLAG_LOAD_FILE) == 0)
+        if ((flags & FLAG_LOAD_FILE) == 0) {
             filename[strlen(filename) - 4] = '\0';
             save_graph(filename, graph);
+        }
     }
     exit(EXIT_SUCCESS);
 }
