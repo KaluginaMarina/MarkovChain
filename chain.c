@@ -63,6 +63,17 @@ char* read_file(char *fname){
 
     if (sz >= 25000){
         fprintf(stderr, "Внимание: файл содержит %ld символов.\n", sz);
+        if (sz >= 50000) {
+            printf("Вы уверены, что хотите продолжить? (y, N)\n");
+            char c = '\0';
+            while (c != 'y' || c != 'Y' || c != 'n' || c != 'N') {
+                scanf("%c", &c);
+                if (c == 'N' || c == 'n') {
+                    exit(EXIT_SUCCESS);
+                }
+            }
+            printf("\n");
+        }
     }
     rewind(f);
 
