@@ -4,16 +4,22 @@
 #include <time.h>
 #include "chain.h"
 
-graph* create_new_machine_graph_file(FILE *file){
+struct graph {
+    size_t size_graph;
+    char** v_graph;
+    double** e_graph;
+} graph;
+
+struct graph* create_new_machine_graph_file(FILE *file){
     return load_graph(file);
 }
 
-graph* create_new_machine(FILE *file){
+struct graph* create_new_machine(FILE *file){
     char* str = read_file(file);
     if (str == NULL){
         return NULL;
     }
-    graph* graph = graph_create(strlen(str));
+    struct graph* graph = graph_create(strlen(str));
     if (graph == NULL){
         return NULL;
     }
@@ -21,7 +27,7 @@ graph* create_new_machine(FILE *file){
     return graph;
 }
 
-char* generate(graph* graph){
+char* generate(struct graph const* graph){
     size_t buf = graph->size_graph * 250;
     char* str = (char*)malloc(buf * sizeof(char));
     *str = '\0';
@@ -33,8 +39,7 @@ char* generate(graph* graph){
             str = do_res_string(str);
             return str;
         }
-        int i;
-        for (i = 1; i < graph->size_graph; ++i){
+        for (int i = 1; i < graph->size_graph; ++i){
             if (graph->e_graph[ind][i-1] < rand_v && graph->e_graph[ind][i] >= rand_v){
                 str = strcat(str, graph->v_graph[i]);
                 str = strcat(str, " ");

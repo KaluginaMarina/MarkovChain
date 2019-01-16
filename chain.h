@@ -8,21 +8,21 @@
  * @param file - файл
  * @return указатель на новый граф
  */
-graph* create_new_machine(FILE *file);
+struct graph* create_new_machine(FILE *file);
 
 /**
  * Функция создания автомата из сохраненного графа
  * @param file - файл
  * @return указатель на граф
  */
-graph* create_new_machine_graph_file(FILE *file);
+struct graph* create_new_machine_graph_file(FILE *file);
 
 /**
  * Функция генерации предложения
  * @param graph - указатель на граф состояний (автомат)
  * @return - указатель на строку
  */
-char* generate(graph* graph);
+char* generate(struct graph const *graph);
 
 /**
  * функция считывает строку с файла

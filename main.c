@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     }
     char* filename = argv[optind];
 
-    graph* graph;
+    struct graph* graph;
     if ((flags & FLAG_LOAD_FILE) != 0){
         filename[strlen(filename) - 4] = '\0';
         FILE *file = fopen(filename, "r");

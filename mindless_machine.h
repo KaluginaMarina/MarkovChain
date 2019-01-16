@@ -16,11 +16,7 @@
  * e_graph - ребра графа - двумерный массив int'ов, в котом сохраняется отношения между словами
  * size_graph - количество вершин графа
  */
-typedef struct graph {
-    size_t size_graph;
-    char** v_graph;
-    double** e_graph;
-} graph;
+struct graph;
 
 /**
  * функция считывает строку с консоли до переноса строки.
@@ -36,7 +32,7 @@ int read_string (char *str);
  * @return  0 - успешное выполнении функции,
  *          -1 - ошибка: указатель не инициаллизирован
  */
-int write_console(char *str);
+int write_console(char const *str);
 
 /**
  * функция записывает строку в файл
@@ -46,7 +42,7 @@ int write_console(char *str);
  * @return  0 - успешное выполнении функции,
  *          -1 - ошибка: указатель не инициаллизирован
  */
-int write_file(char *fname, char *str);
+int write_file(char const *fname, char const *str);
 
 /**
  * функция парсит строку по токенам и создает конечный автомат
@@ -55,7 +51,7 @@ int write_file(char *fname, char *str);
  * @return количество считанных символов
  *          -1 - ошибка: передан NULL
  */
-int create_machine(char *str, graph *graph);
+int create_machine(char *str, struct graph *graph);
 
 /**
  *  функция переводит слово в нижний регистр (english)
@@ -83,7 +79,7 @@ char* str_replace_punct(char* str);
  *          -1 - совпадений не найдено
  *          -2 - переден NULL
  */
-int graph_search_elem(char *str, graph const* graph);
+int graph_search_elem(char const *str, struct graph const* graph);
 
 /**
  * Функция добавления вершины в граф состояний
@@ -93,7 +89,7 @@ int graph_search_elem(char *str, graph const* graph);
  * @return  индекс по которому находится элемент
  *          -1 - Ошибка: указатель на NULL
  */
-int graph_add_v_graph(char *str, graph* graph);
+int graph_add_v_graph(char const *str, struct graph* graph);
 
 /**
  * Функция добавления элемента в граф состояний
@@ -103,20 +99,14 @@ int graph_add_v_graph(char *str, graph* graph);
  * @return  номер полученного элемента
  *          -1 - Ошибка: указатель на неинициаллизированную строку
  */
-int graph_add_e_graph(char *str_prev, char *str_cur, graph* graph);
+int graph_add_e_graph(char const *str_prev, char const *str_cur, struct graph* graph);
 
 /**
  * Функция для создания графа состояний
  * @param sz - размер выделяемой памяти
  * @return указатель на graph
  */
-graph* graph_create(size_t sz);
-
-/**
- * Функция выводит граф в консоль
- * @param graph
- */
-void graph_print(graph* graph);
+struct graph* graph_create(size_t sz);
 
 /**
  * Функция сохраняет граф в файл
@@ -131,21 +121,21 @@ void graph_print(graph* graph);
  * @param output_file - файл для хранения графа
  * @param graph - указатель на граф
  */
-bool save_graph(FILE *output_file, graph* graph);
+bool save_graph(FILE *output_file, struct graph const *graph);
 
 /**
  * Функция выгружает граф
  * @param input_file - файл для хранения графа
  * @return - указатель на созданный граф
  */
-graph* load_graph(FILE *input_file);
+struct graph* load_graph(FILE *input_file);
 
 /**
  * Функция создания графа вероятностей
  * @param graph - указатель на граф
  * @return - результат проверки
  */
-bool graph_to_probability(graph *graph);
+bool graph_to_probability(struct graph *graph);
 
 /**
  * Функция, которая проверяет, присутствует ли буква с в строке-шаблоне
@@ -153,7 +143,7 @@ bool graph_to_probability(graph *graph);
  * @param template - шаблон для сравнения
  * @return - результат проверки
  */
-bool find_char_in_template(char c, char *template);
+bool find_char_in_template(char c, char const *template);
 
 /**
  * Функция, которая проверяет, принадлежит ли символ с интервалу [start, end]
