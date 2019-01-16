@@ -50,13 +50,15 @@ int main(int argc, char *argv[]) {
     graph* graph;
     if ((flags & FLAG_LOAD_FILE) != 0){
         filename[strlen(filename) - 4] = '\0';
-        graph = create_new_machine_graph_file(filename);
+        FILE *file = fopen(filename, "r");
+        graph = create_new_machine_graph_file(file);
         if (graph == NULL){
             fprintf(stderr, "Неверное имя файла или граф не был сохранен.\n");
             exit(EXIT_FAILURE);
         }
     } else {
-        graph = create_new_machine(filename);
+        FILE *file = fopen(filename, "r");
+        graph = create_new_machine(file);
         if (graph == NULL){
             fprintf(stderr, "Неверное имя файла.\n");
             exit(EXIT_FAILURE);
@@ -76,7 +78,8 @@ int main(int argc, char *argv[]) {
     if ((flags & FLAG_SAVE_GRAPH) != 0) {
         if ((flags & FLAG_LOAD_FILE) == 0) {
             filename[strlen(filename) - 4] = '\0';
-            save_graph(filename, graph);
+            FILE* file = fopen(filename, "w+");
+            save_graph(file, graph);
         }
     }
     exit(EXIT_SUCCESS);

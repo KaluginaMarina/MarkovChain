@@ -167,8 +167,7 @@ int graph_add_e_graph(char *str_prev, char *str_cur, graph* graph){
     return 0;
 }
 
-bool save_graph(char* filename, graph* graph){
-    FILE* output_file = fopen(filename, "w+");
+bool save_graph(FILE *output_file, graph* graph){
     if (output_file == NULL){
         return false;
     }
@@ -187,9 +186,8 @@ bool save_graph(char* filename, graph* graph){
     return true;
 }
 
-graph* load_graph(char* filename){
+graph* load_graph(FILE *input_file){
 
-    FILE* input_file = fopen(filename, "r");
     if (input_file == NULL){
         return NULL;
     }

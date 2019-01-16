@@ -4,12 +4,12 @@
 #include <time.h>
 #include "chain.h"
 
-graph* create_new_machine_graph_file(char* filename){
-    return load_graph(filename);
+graph* create_new_machine_graph_file(FILE *file){
+    return load_graph(file);
 }
 
-graph* create_new_machine(char* filename){
-    char* str = read_file(filename);
+graph* create_new_machine(FILE *file){
+    char* str = read_file(file);
     if (str == NULL){
         return NULL;
     }
@@ -49,11 +49,9 @@ char* generate(graph* graph){
     }
 }
 
-char* read_file(char *fname){
+char* read_file(FILE *f){
     long n = 0;
     int c;
-
-    FILE *f = fopen(fname, "r");
 
     check_fsize(f);
     size_t sz = get_file_size(f);

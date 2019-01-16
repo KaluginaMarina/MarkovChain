@@ -5,17 +5,17 @@
 #include <stdio.h>
 /**
  * Функция создания нового конечного автомата из файла filename
- * @param filename - имя файла
+ * @param file - файл
  * @return указатель на новый граф
  */
-graph* create_new_machine(char* filename);
+graph* create_new_machine(FILE *file);
 
 /**
  * Функция создания автомата из сохраненного графа
- * @param filename - имя файла
+ * @param file - файл
  * @return указатель на граф
  */
-graph* create_new_machine_graph_file(char* filename);
+graph* create_new_machine_graph_file(FILE *file);
 
 /**
  * Функция генерации предложения
@@ -26,10 +26,10 @@ char* generate(graph* graph);
 
 /**
  * функция считывает строку с файла
- * @param fname - имя файла, с которого производится считывание
+ * @param file - файл, с которого производится считывание
  * @return  указатель на начало строки, в которую производится запись с файла
  */
-char* read_file(char *fname);
+char* read_file(FILE *file);
 
 /**
  * Функция приводит строку к читаемому виду (без лишних пробелов между знаками препинания)

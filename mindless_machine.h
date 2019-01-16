@@ -8,6 +8,8 @@
 #ifndef MARKOV_CHAIN_FOR_STRING_H
 #define MARKOV_CHAIN_FOR_STRING_H
 
+#include <stdio.h>
+
 /**
  * Структура для хранения графа состояний конечного автомата.
  * v_graph - вершины графа - массив слов, встречающихся в тексте
@@ -126,17 +128,17 @@ void graph_print(graph* graph);
  * v_graph[0][0] v_graph[0][1] ... v_graph[0][size_graph - 1]
  * ...
  * v_graph[size_graph - 1][0] v_graph[size_graph - 1][1] ... v_graph[size_graph - 1][size_graph - 1]
- * @param filename - имя файла для хранения графа
+ * @param output_file - файл для хранения графа
  * @param graph - указатель на граф
  */
-bool save_graph(char* filename, graph* graph);
+bool save_graph(FILE *output_file, graph* graph);
 
 /**
  * Функция выгружает граф
- * @param filename_v_graph - имя файла для хранения графа
+ * @param input_file - файл для хранения графа
  * @return - указатель на созданный граф
  */
-graph* load_graph(char* filename);
+graph* load_graph(FILE *input_file);
 
 /**
  * Функция создания графа вероятностей
