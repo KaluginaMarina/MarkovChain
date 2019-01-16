@@ -75,13 +75,15 @@ char* do_res_string(char* str){
     char* result = (char*)malloc(9999 * sizeof(char));
     char* str_cur = str;
     char* res_cur = result;
+
     while (*str_cur != '\0'){
-        if  (*str_cur == ' ' &&
-            (*(str_cur + 1) == '.' || *(str_cur + 1) == ',' || *(str_cur + 1) == '?' || *(str_cur + 1) == '!' ||
-             *(str_cur + 1) == '-' || *(str_cur + 1) == ':' || *(str_cur + 1) == ';')){
-            if (*(str_cur + 2) >= (char)'a' && *(str_cur + 2) <= (char)'z'){
-                *(str_cur + 2) = (*(str_cur + 2) - (char)'a') + (char)'A';
+        if  (*str_cur == ' ' && find_char_in_template(*(str_cur + 1), ".,?!-:;")){
+
+            if (*(str_cur + 2) != '\0' && char_in_interval(*(str_cur + 3), 'a', 'z') &&
+                find_char_in_template(*(str_cur + 1), ".?!")){
+                *(str_cur + 3) = (*(str_cur + 3) - (char)'a') + (char)'A';
             }
+
             ++str_cur;
             continue;
         }
@@ -89,7 +91,8 @@ char* do_res_string(char* str){
         ++str_cur;
         ++res_cur;
     }
-    if (*result >= (char)'a' && *result <= (char)'z'){
+
+    if (char_in_interval(*result, 'a', 'z')){
         *result = (*result - (char)'a') + (char)'A';
     }
     *res_cur = '\0';

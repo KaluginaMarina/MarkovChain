@@ -141,7 +141,24 @@ graph* load_graph(char* filename);
 /**
  * Функция создания графа вероятностей
  * @param graph - указатель на граф
- * @return
+ * @return - результат проверки
  */
 bool graph_to_probability(graph *graph);
+
+/**
+ * Функция, которая проверяет, присутствует ли буква с в строке-шаблоне
+ * @param c - символ для проверки
+ * @param template - шаблон для сравнения
+ * @return - результат проверки
+ */
+bool find_char_in_template(char c, char *template);
+
+/**
+ * Функция, которая проверяет, принадлежит ли символ с интервалу [start, end]
+ * @param c - символ для проверки
+ * @param start - начало интервала
+ * @param end - конец интервала
+ * @return - результат проверки
+ */
+bool char_in_interval(char c, char start, char end);
 #endif //MARKOV_CHAIN_FOR_STRING_H

@@ -85,15 +85,15 @@ char* str_replace_punct(char* str){
     char* cur_str = str;
     char* cur_res = res_str;
     while(*cur_str != '\0'){
-        if (*cur_str == '"' || *cur_str == '\n' || *cur_res == '\t'){
+        if (find_char_in_template(*cur_str, "\"\n\t")){
             ++cur_str;
             *cur_res = ' ';
             ++cur_res;
             continue;
         }
 
-        if ( *cur_str != ' ' && *cur_str != '\0' && *cur_str != '\'' && !(*cur_str >= 'a' && *cur_str <= 'z') &&
-            !(*cur_str >= 'A' && *cur_str <= 'Z') && !(*cur_str >= '0' && *cur_str <= '9')) {
+        if (!find_char_in_template(*cur_str, " \'") && !char_in_interval(*cur_str, 'a', 'z') &&
+             !char_in_interval(*cur_str, 'A', 'Z') && !char_in_interval(*cur_str, '0', '9')){
             *cur_res = ' ';
             ++cur_res;
         }
@@ -239,4 +239,25 @@ bool graph_to_probability(graph *graph){
         }
     }
     return true;
+}
+
+bool find_char_in_template(char c, char *template){
+    if (template == NULL){
+        return false;
+    }
+    char *cur = template;
+    while (*cur != '\0') {
+        if (c == *cur){
+            return true;
+        }
+        ++cur;
+    }
+    return false;
+}
+
+bool char_in_interval(char c, char start, char end){
+    if (c >= start && c <= end){
+        return true;
+    }
+    return false;
 }
