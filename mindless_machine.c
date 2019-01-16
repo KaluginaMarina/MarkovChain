@@ -111,38 +111,22 @@ char* str_replace_punct(char* str){
     return res_str;
 }
 
-graph* graph_create(size_t sz){
+graph* graph_create(size_t sz) {
     size_t i, j;
-    graph* gr = (graph*)malloc(sizeof(gr));
+    graph *gr = (graph *) malloc(sizeof(gr));
     gr->size_graph = 0;
-    gr->v_graph = (char**)malloc(sz * sizeof(char*));
-    for (i = 0; i < sz; ++i){
-        gr->v_graph[i] = (char*)malloc(sizeof(char) * 256);
+    gr->v_graph = (char **) malloc(sz * sizeof(char *));
+    for (i = 0; i < sz; ++i) {
+        gr->v_graph[i] = (char *) malloc(sizeof(char) * 256);
     }
-    gr->e_graph = (double**)malloc(sz * sizeof(double *));
-    for (i = 0; i < sz; ++i){
-        gr->e_graph[i] = (double*)malloc(sz * sizeof(double));
-        for(j = 0; j < sz; ++j){
+    gr->e_graph = (double **) malloc(sz * sizeof(double *));
+    for (i = 0; i < sz; ++i) {
+        gr->e_graph[i] = (double *) malloc(sz * sizeof(double));
+        for (j = 0; j < sz; ++j) {
             gr->e_graph[i][j] = 0;
         }
     }
     return gr;
-}
-
-void graph_print(graph* graph){
-    printf("\n======================================\n"
-           "Колиество вершин: %lu\n\n", graph->size_graph);
-    for (size_t i = 0; i < graph->size_graph; ++i) {
-        printf("%s ->", graph->v_graph[i]);
-        if (graph->e_graph[i][0] > 0) printf(" \"%s\" ", graph->v_graph[0]);
-        for(size_t j = 0; j < graph->size_graph; ++j){
-            if (graph->e_graph[i][j] - graph->e_graph[i][j - 1] > 0){
-                printf(" \"%s\" ", graph->v_graph[j]);
-            }
-            printf("\n");
-        }
-    }
-    printf("\n======================================\n\n");
 }
 
 int graph_search_elem(char *str, graph const* graph){
