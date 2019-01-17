@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "mindless_machine.h"
+#include "graphio.h"
 
 struct graph {
 size_t size_graph;
@@ -91,7 +92,7 @@ char* str_replace_punct(char* str){
     char* cur_str = str;
     char* cur_res = res_str;
     while(*cur_str != '\0'){
-        if (find_char_in_template(*cur_str, "\"\n\t")){
+        if (find_char_in_template(*cur_str, "\"\r\n\t")){
             ++cur_str;
             *cur_res = ' ';
             ++cur_res;
