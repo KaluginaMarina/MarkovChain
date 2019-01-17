@@ -1,8 +1,15 @@
+#include "mindless_machine.h"
+#include <stdio.h>
+
+ /**
+ * Функции для работы с конечным автоматом
+ * и реализации цепей Маркова для генерации осмысленного текста,
+ * исходя из данного.
+ */
+
 #ifndef MARKOV_CHAIN_CHAIN_H
 #define MARKOV_CHAIN_CHAIN_H
 
-#include "mindless_machine.h"
-#include <stdio.h>
 /**
  * Функция создания нового конечного автомата из файла filename
  * @param file - файл
@@ -37,19 +44,4 @@ char* read_file(FILE *file);
  * @return - новую строку-результат
  */
 char* do_res_string(char* str);
-
-/**
- * Функция проверки размера файла
- * При неподустимом размере файла предлагает пользователю завершить программу
- * @param f - исходный файл
- * @return
- */
-bool check_fsize(FILE *f);
-
-/**
- * Функция подсчета количества символов в файле
- * @param f - исходный файл
- * @return количество символов
- */
-size_t get_file_size(FILE *f);
 #endif //MARKOV_CHAIN_CHAIN_H

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "chain.h"
+#include "graphio.h"
 
 struct graph {
     size_t size_graph;
@@ -102,31 +103,3 @@ char* do_res_string(char* str){
     return result;
 }
 
-bool check_fsize(FILE *f){
-    if (f == NULL){
-        return false;
-    }
-
-    size_t sz = get_file_size(f);
-
-    if (sz >= 25000){
-        fprintf(stderr, "Внимание: файл содержит %ld символов.\n", sz);
-        char c = 'N';
-        printf("Вы уверены, что хотите продолжить? (y, N)\n");
-        scanf("%s", &c);
-        if ( !(c == 'Y' || c == 'y')) {
-            exit(EXIT_SUCCESS);
-        }
-        if (sz >= 50000) {
-            printf("Я Вас предупреждала...\n");
-        }
-    }
-    return true;
-}
-
-size_t get_file_size(FILE *f){
-    fseek(f, 0, SEEK_END);
-    long sz = ftell(f);
-    rewind(f);
-    return (size_t)sz;
-}

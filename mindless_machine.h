@@ -1,14 +1,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
-/*
-* Функции для работы со строками
-*/
 
+/**
+ * Функции для создания конечного автомата без предусловий
+ * и создания графа состояний
+ */
 #ifndef MARKOV_CHAIN_FOR_STRING_H
 #define MARKOV_CHAIN_FOR_STRING_H
-
-#include <stdio.h>
 
 /**
  * Структура для хранения графа состояний конечного автомата.
